@@ -1,0 +1,43 @@
+name: Feature request
+description: Suggest an idea or improvement
+title: '[Feature]: '
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea. Please describe the problem before the solution.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is hard, missing, or slow today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Project constraints
+      options:
+        - label: Every order still keeps its full status and timestamp history for the audit.
+          required: true
+        - label: Telegram delivery stays server-side; the bot token and chat id never reach the client.
+          required: true
+        - label: Bulk CSV import produces complete orders, never partial rows.
+          required: true
+        - label: Deep links keep working on both Firebase Hosting and Vercel.
+          required: true
+        - label: No secrets in the Vite environment; only the anon key is public.
+          required: true

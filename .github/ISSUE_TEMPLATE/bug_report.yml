@@ -1,0 +1,121 @@
+name: Bug report
+description: Something is not working as it should
+title: '[Bug]: '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make Tracker better. Please fill in the fields below.
+
+        An order whose status moves without a record, or a notification that
+        never arrives, breaks the thread the team relies on. If that is what
+        you hit, say so up front.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: A short, clear description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Import ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the error message shown in the app, if any.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area affected
+      description: Which part of the app is involved?
+      options:
+        - Quick order (CSV import and review)
+        - Order list and status updates
+        - Receive goods (/to-receive)
+        - Telegram notification
+        - History and audit log
+        - Authentication
+        - UI and theme
+        - Deployment (Firebase or Vercel)
+        - Other
+    validations:
+      required: false
+  - type: input
+    id: order
+    attributes:
+      label: Order involved
+      description: If a specific order is involved, identify it (order number, supplier, or the CSV file name).
+      placeholder: 'e.g. PO-2569-0042, or purchase-list-oct.csv'
+    validations:
+      required: false
+  - type: dropdown
+    id: status
+    attributes:
+      label: Order status shown
+      description: If the bug involves a status, which one was displayed?
+      options:
+        - ต้องสั่งซื้อ (to order)
+        - สั่งแล้ว (ordered)
+        - รับของแล้ว (received)
+        - ยกเลิก (cancelled)
+        - Not applicable
+    validations:
+      required: false
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Edge
+        - Firefox
+        - Safari
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - iOS
+        - Android
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / deployment
+      description: The commit, Firebase Hosting release, or approximate date you were using.
+      placeholder: e.g. ea855d4 or 2026-10-14
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Screenshots, console output, or extra context
+      description: Paste relevant screenshots or browser console output. Never paste Supabase keys (anon or service-role), the Telegram bot token, or the chat id.
+      render: text
+    validations:
+      required: false
