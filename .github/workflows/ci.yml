@@ -50,3 +50,9 @@ jobs:
 
       - name: Build Production
         run: npm run build
+        env:
+          # Public placeholders so the production build guard passes without
+          # repository secrets in CI. Real values are injected in the deploy
+          # workflow.
+          VITE_SUPABASE_URL: https://placeholder.supabase.co
+          VITE_SUPABASE_ANON_KEY: placeholder-anon-key

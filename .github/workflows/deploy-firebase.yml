@@ -38,8 +38,21 @@ jobs:
       - name: Type Checking
         run: npm run type-check
 
+      - name: Verify Supabase build secrets
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_ANON_KEY" ]; then
+            echo "::error title=Missing deploy secrets::Set the repository secrets VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (Supabase project zfqdpsaxumpcqvfusiub) before deploying."
+            exit 1
+          fi
+
       - name: Build Production
         run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@500ac625ca2dd40cbd15f7659af953801858032a # v0.11.0
