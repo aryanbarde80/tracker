@@ -10,6 +10,7 @@ import AppIcon from '@/components/ui/AppIcon.vue';
 import BrandMark from '@/components/ui/BrandMark.vue';
 import { useTheme } from '@/composables/use-theme';
 import { supabase } from '@/supabase/client';
+import { getLocalStorageItem, setLocalStorageItem } from '@/utils/safe-storage';
 import AuthView from '@/views/AuthView.vue';
 
 const SIDEBAR_STORAGE_KEY = 'tracker:sidebar-collapsed';
@@ -24,10 +25,10 @@ const { isDark, toggleTheme } = useTheme();
 
 // Shell state
 const sidebarOpen = ref<boolean>(false);
-const sidebarCollapsed = ref<boolean>(localStorage.getItem(SIDEBAR_STORAGE_KEY) === '1');
+const sidebarCollapsed = ref<boolean>(getLocalStorageItem(SIDEBAR_STORAGE_KEY) === '1');
 
 watch(sidebarCollapsed, (value: boolean) => {
-  localStorage.setItem(SIDEBAR_STORAGE_KEY, value ? '1' : '0');
+  setLocalStorageItem(SIDEBAR_STORAGE_KEY, value ? '1' : '0');
 });
 
 // The mobile drawer never survives a navigation.

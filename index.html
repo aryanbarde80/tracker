@@ -22,7 +22,12 @@
     <!-- Script to prevent FOUC for dark mode -->
     <script>
       (function () {
-        const theme = localStorage.getItem('theme');
+        let theme = null;
+        try {
+          theme = window.localStorage.getItem('theme');
+        } catch {
+          // Storage is optional; fall back to the system preference.
+        }
         if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.classList.add('dark');
         }

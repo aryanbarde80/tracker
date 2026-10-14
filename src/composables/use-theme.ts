@@ -1,6 +1,7 @@
 import type { Ref } from 'vue';
 
 import { effectScope, ref, watch } from 'vue';
+import { getLocalStorageItem, setLocalStorageItem } from '@/utils/safe-storage';
 
 const THEME_STORAGE_KEY = 'theme' as const;
 const DARK_CLASS = 'dark' as const;
@@ -22,7 +23,7 @@ function applyTheme(dark: boolean): void {
   else {
     document.documentElement.classList.remove(DARK_CLASS);
   }
-  localStorage.setItem(THEME_STORAGE_KEY, dark ? 'dark' : 'light');
+  setLocalStorageItem(THEME_STORAGE_KEY, dark ? 'dark' : 'light');
 }
 
 function toggleTheme(): void {
@@ -47,7 +48,7 @@ function initialize(): void {
     return;
   initialized = true;
 
-  const saved: string | null = localStorage.getItem(THEME_STORAGE_KEY);
+  const saved: string | null = getLocalStorageItem(THEME_STORAGE_KEY);
 
   if (saved !== null) {
     isDark.value = saved === 'dark';
@@ -60,7 +61,8 @@ function initialize(): void {
 /**
  * Composable that manages the application's light / dark theme.
  *
- * - Persists the user's preference in `localStorage`.
+ * - Persists the user's preference in `localStorage` when available.
+ * - Keeps the preference in memory when browser storage is blocked.
  * - Falls back to the OS-level `prefers-color-scheme` media query.
  * - Adds / removes the `dark` class on `<html>` so CSS variables switch.
  *
@@ -68,8 +70,7 @@ function initialize(): void {
  * reactive state and only one watcher / initialization routine exists.
  */
 export function useTheme(): UseThemeReturn {
-  // Lazily initialize on first composable call (guaranteed to be in a
-  // browser context where localStorage and matchMedia are available).
+  // Lazily initialize on first composable call in the browser context.
   initialize();
 
   return {
